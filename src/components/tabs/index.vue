@@ -4,15 +4,16 @@
       {{ navInfos.navName }}
     </div>
     <ul id="tabs">
+      <!-- FIXME: remove -->
       <li class="tab tab-search" @click="showSearch">
         <i class="fas fa-search tab-icon" />
         <span>快速搜索</span>
       </li>
-      <li class="tab tab-save" @click="showSaveConfigAlert">
+      <li class="tab tab-save" @click="toggleSaveModalStatus(true)">
         <i class="fas fa-share-square tab-icon"></i>
         <span>保存配置</span>
       </li>
-      <li class="tab tab-import" @click="showImportConfigAlert">
+      <li class="tab tab-import" @click="toggleImportModalStatus(true)">
         <i class="fas fa-cog tab-icon"></i>
         <span>导入配置</span>
       </li>
@@ -21,7 +22,7 @@
         v-for="(item, index) in navInfos.catalogue"
         :key="index"
         class="tab"
-        @click="toID(item.id)"
+        @click="navigate2Tab(item.id)"
       >
         <span class="li-container">
           <i :class="['fas', `fa-${item.icon}`, 'tab-icon']" />
@@ -33,17 +34,20 @@
         <i class="fas fa-plus" />
       </li>
     </ul>
+
     <!--    添加标签弹框     -->
     <tabAlert name="新增标签" />
+
     <!--    保存配置弹框     -->
     <save-config
-      @closeSaveConfigAlert="closeSaveConfigAlert"
-      :isShow="shouldShowSaveAlert"
+      @closeSaveConfigAlert="toggleSaveModalStatus(false)"
+      :visible="shouldShowSaveAlert"
     />
+
     <!--    导入配置弹框     -->
     <import-config
-      @closeImportConfigAlert="closeImportConfigAlert"
-      :isShow="shouldShowImportAlert"
+      @closeImportConfigAlert="toggleImportModalStatus(false)"
+      :visible="shouldShowImportAlert"
     />
   </aside>
 </template>
@@ -82,68 +86,64 @@ export default {
       ]);
     };
 
-    // 关闭"保存配置弹框"
-    function closeSaveConfigAlert(value) {
+    const toggleSaveModalStatus = (value: boolean): void => {
       shouldShowSaveAlert.value = value;
-    }
+    };
 
-    // 展示"保存配置弹框"
-    function showSaveConfigAlert() {
-      shouldShowSaveAlert.value = true;
-    }
-
-    // 展示"导入配置弹框"
-    function showImportConfigAlert() {
-      shouldShowImportAlert.value = true;
-    }
-
-    // 关闭"导入配置弹框"
-    function closeImportConfigAlert(value) {
+    const toggleImportModalStatus = (value: boolean): void => {
       shouldShowImportAlert.value = value;
-    }
+    };
 
     // 展示搜索框
-    function showSearch() {
+    const showSearch = (): void => {
       if (store.state.moduleSearch.isSearch) {
         store.commit("changeIsSearch", false);
         store.commit("changeSearchWord", "");
       } else {
         store.commit("changeIsSearch", true);
       }
-    }
+    };
 
     // 跳转到指定标签
-    function toID(id) {
+    const navigate2Tab = (id: number): void => {
       const content = document.getElementById("content");
-      const el = document.getElementById(`${id}`);
-      const start = content!.scrollTop;
-      const end = el!.offsetTop - 80;
-      const each =
+      const el = document.getElementById(String(id));
+
+      if (!content || !el) {
+        // TODO:
+        return;
+      }
+
+      const start = content.scrollTop;
+      const end = el.offsetTop - 80;
+
+      const eachDistance =
         start > end
           ? (-1 * Math.abs(start - end)) / 20
           : Math.abs(start - end) / 20;
+
       let count = 0;
+
+      // FIXME:
       const timer = setInterval(() => {
         if (count < 20) {
-          content!.scrollTop += each;
+          content.scrollTop += eachDistance;
           count++;
         } else {
           clearInterval(timer);
         }
       }, 10);
-    }
+    };
 
     return {
       navInfos,
       displayAddTabModal,
       shouldShowSaveAlert,
-      closeSaveConfigAlert,
-      showSaveConfigAlert,
+      toggleSaveModalStatus,
+      toggleImportModalStatus,
       shouldShowImportAlert,
-      showImportConfigAlert,
-      closeImportConfigAlert,
       showSearch,
-      toID,
+      navigate2Tab,
     };
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div class="save-config-container" v-show="isShow">
+  <div class="save-config-container" v-show="visible">
     <div class="save-config-alert">
       <div class="close-save-config-alert" @click="closeAlert"></div>
       <div class="save-config-alert-title">保存配置</div>
@@ -13,30 +13,34 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from "vue";
-import lpButton from "../../public/lp-button";
+
+import lpButton from "@/components/public/lp-button/index.vue";
+
 export default {
   props: {
-    isShow: {
+    visible: {
       type: Boolean,
       default: false,
     },
   },
+
   components: {
     lpButton,
   },
+
   setup(props, { emit }) {
     const result = ref("none"); // 保存的结果
 
     // 封装的下载数据函数
     function downLoadFile(fileName, content) {
-      const aTag = document.createElement("a");
-      const blob = new Blob([content]);
-      aTag.download = fileName;
-      aTag.href = URL.createObjectURL(blob);
-      aTag.click();
-      URL.revokeObjectURL(blob);
+      // const aTag = document.createElement("a");
+      // const blob = new Blob([content]);
+      // aTag.download = fileName;
+      // aTag.href = URL.createObjectURL(blob);
+      // aTag.click();
+      // URL.revokeObjectURL(blob);
     }
 
     // 调用下载接口
@@ -45,9 +49,9 @@ export default {
     }
 
     // 关闭弹窗
-    function closeAlert() {
-      emit("closeSaveConfigAlert", false);
-    }
+    const closeAlert = (): void => {
+      emit("closeSaveConfigAlert");
+    };
 
     return { result, saveConfig, closeAlert };
   },

@@ -1,5 +1,5 @@
 <template>
-  <div class="import-config-container" v-show="isShow">
+  <div class="import-config-container" v-show="visible">
     <div class="import-config-alert">
       <div class="close-import-config-alert" @click="closeAlert"></div>
       <div class="import-config-alert-title">导入配置</div>
@@ -33,32 +33,38 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, inject } from "vue";
-import lpButton from "../../public/lp-button";
+
+import lpButton from "../../public/lp-button/index.vue";
+
 export default {
   props: {
-    isShow: {
+    visible: {
       type: Boolean,
       default: true,
     },
   },
+
   components: {
     lpButton,
   },
+
   setup(props, { emit }) {
+    // TODO: readonly
     const result = ref("none"); // 导入的结果
     const isUpload = ref(false); // 判断是否上传配置文件
     const isImport = ref(false); // 判断配置是否导入成功
     const isLoading = ref(false); // 判断按钮是否处于加载状态
     const inputFile = ref(null); // 获取文件标签
     const hasFile = ref(0); // 判断文件的传入情况。0：未传入  1: 格式错误  2：格式正确
-    const $message = inject("message");
+    // TODO: DI?
+    const $message: any = inject("message");
 
     // 导入配置
     function importConfig() {
       const reader = new FileReader();
-      const files = inputFile.value.files;
+      const files = (inputFile.value as any).files;
       if (hasFile.value == 0) {
         $message({
           type: "warning",
@@ -80,10 +86,10 @@ export default {
     }
 
     // 关闭弹窗
-    function closeAlert() {
-      emit("closeImportConfigAlert", false);
+    const closeAlert = (): void => {
+      emit("closeImportConfigAlert");
       hasFile.value = 0;
-    }
+    };
 
     function fileChange(e) {
       const files = e.target.files;
