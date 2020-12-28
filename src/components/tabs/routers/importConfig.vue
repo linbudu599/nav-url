@@ -35,16 +35,16 @@
 
 <script>
 import { ref, inject } from "vue";
-import lpButton from "../../public/lp-button/lp-button";
+import lpButton from "../../public/lp-button";
 export default {
   props: {
     isShow: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   components: {
-    lpButton
+    lpButton,
   },
   setup(props, { emit }) {
     const result = ref("none"); // 导入的结果
@@ -62,16 +62,16 @@ export default {
       if (hasFile.value == 0) {
         $message({
           type: "warning",
-          content: "请先上传配置文件"
+          content: "请先上传配置文件",
         });
       } else if (hasFile.value == 1) {
         $message({
           type: "warning",
-          content: "请上传正确格式的文件，例如xx.json"
+          content: "请上传正确格式的文件，例如xx.json",
         });
       } else if (hasFile.value == 2) {
         reader.readAsText(files[0]);
-        reader.onload = function() {
+        reader.onload = function () {
           const data = this.result;
           window.localStorage.navInfos = data;
           location.reload();
@@ -90,7 +90,7 @@ export default {
       if (files.length === 0) {
         $message({
           type: "warning",
-          content: "请先上传配置文件"
+          content: "请先上传配置文件",
         });
       } else {
         const targetFile = files[0];
@@ -98,13 +98,13 @@ export default {
           hasFile.value = 1;
           $message({
             type: "warning",
-            content: "请确认文件格式是否正确"
+            content: "请确认文件格式是否正确",
           });
         } else {
           hasFile.value = 2;
           $message({
             type: "success",
-            content: "文件格式正确"
+            content: "文件格式正确",
           });
         }
       }
@@ -119,9 +119,9 @@ export default {
       closeAlert,
       inputFile,
       fileChange,
-      hasFile
+      hasFile,
     };
-  }
+  },
 };
 </script>
 

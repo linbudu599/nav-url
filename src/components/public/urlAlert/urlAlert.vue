@@ -3,7 +3,7 @@
     :class="[
       'url-alert-container',
       'animate__animated',
-      { animate__fadeIn: state.isShow }
+      { animate__fadeIn: state.isShow },
     ]"
     v-show="state.isShow"
   >
@@ -40,14 +40,16 @@
 <script>
 import { inject } from "vue";
 import { useStore } from "vuex";
-import lpButton from "../../public/lp-button/lp-button";
-import lpInput from "../../public/lp-input/lp-input";
+
+import lpButton from "@/components/public/lp-button";
+import lpInput from "@/components/public/lp-input";
+
 import selectIcon from "./selectIcon";
 export default {
   components: {
     lpButton,
     lpInput,
-    selectIcon
+    selectIcon,
   },
   setup() {
     const store = useStore();
@@ -66,7 +68,7 @@ export default {
         { key: "whichTag", value: -1 },
         { key: "imgErr", value: false },
         { key: "otherIcon", value: "" },
-        { key: "id", value: -1 }
+        { key: "id", value: -1 },
       ]);
     }
 
@@ -75,7 +77,7 @@ export default {
       if (state.url == "") {
         $message({
           type: "warning",
-          content: "URL不能为空"
+          content: "URL不能为空",
         });
         return;
       }
@@ -86,12 +88,12 @@ export default {
             name: state.name,
             icon: state.icon,
             url: state.url,
-            whichTag: state.whichTag
-          }
+            whichTag: state.whichTag,
+          },
         });
         $message({
           type: "success",
-          content: "网址添加成功"
+          content: "网址添加成功",
         });
       } else if (state.alertType == "修改网址") {
         store.commit("update", {
@@ -100,12 +102,12 @@ export default {
             id: state.id,
             name: state.name,
             icon: state.icon,
-            url: state.url
-          }
+            url: state.url,
+          },
         });
         $message({
           type: "success",
-          content: "网址修改成功"
+          content: "网址修改成功",
         });
       }
 
@@ -116,7 +118,7 @@ export default {
     function inputUrl(value) {
       store.commit("changeUrlInfo", {
         key: "url",
-        value
+        value,
       });
     }
 
@@ -125,7 +127,7 @@ export default {
       if (typeof value != "object") {
         store.commit("changeUrlInfo", {
           key: "name",
-          value
+          value,
         });
       }
     }
@@ -135,9 +137,9 @@ export default {
       confirm,
       cancel,
       inputUrl,
-      inputName
+      inputName,
     };
-  }
+  },
 };
 </script>
 

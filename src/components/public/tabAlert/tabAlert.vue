@@ -3,7 +3,7 @@
     :class="[
       'tab-alert-container',
       'animate__animated',
-      { animate__fadeIn: state.isShowAddTabAlert }
+      { animate__fadeIn: state.isShowAddTabAlert },
     ]"
     v-show="state.isShowAddTabAlert"
   >
@@ -37,14 +37,14 @@
 import { inject } from "vue";
 import { useStore } from "vuex";
 import { judgeString } from "../../../utils/utils";
-import lpButton from "../../public/lp-button/lp-button";
-import lpInput from "../../public/lp-input/lp-input";
+import lpButton from "../../public/lp-button";
+import lpInput from "../../public/lp-input";
 import selectIcon from "./selectIcon";
 export default {
   components: {
     lpButton,
     lpInput,
-    selectIcon
+    selectIcon,
   },
   setup() {
     const store = useStore();
@@ -59,7 +59,7 @@ export default {
         { key: "currentIcon", value: "" },
         { key: "isSelected", value: false },
         { key: "isShowIconList", value: false },
-        { key: "isShowAddTabAlert", value: false }
+        { key: "isShowAddTabAlert", value: false },
       ]);
     }
 
@@ -69,7 +69,7 @@ export default {
       if (state.tagName == "") {
         $message({
           type: "warning",
-          content: "标签名称不能为空"
+          content: "标签名称不能为空",
         });
         return;
       }
@@ -77,7 +77,7 @@ export default {
       if (!judgeString(state.tagName)) {
         $message({
           type: "warning",
-          content: "标签名最多为6位中文或12位英文"
+          content: "标签名最多为6位中文或12位英文",
         });
         return;
       }
@@ -85,7 +85,7 @@ export default {
       if (!state.isSelected) {
         $message({
           type: "warning",
-          content: "请选择合适的图标"
+          content: "请选择合适的图标",
         });
         return;
       }
@@ -94,12 +94,12 @@ export default {
           key: "1",
           value: {
             name: state.tagName,
-            icon: state.trueIcon
-          }
+            icon: state.trueIcon,
+          },
         });
         $message({
           type: "success",
-          content: "标签添加成功"
+          content: "标签添加成功",
         });
       } else if (state.alertType == "修改标签") {
         store.commit("update", {
@@ -107,12 +107,12 @@ export default {
           value: {
             id: state.id,
             icon: state.trueIcon,
-            name: state.tagName
-          }
+            name: state.tagName,
+          },
         });
         $message({
           type: "success",
-          content: "标签修改成功"
+          content: "标签修改成功",
         });
       }
       cancel();
@@ -122,7 +122,7 @@ export default {
     function input(value) {
       store.commit("changeTabInfo", {
         key: "tagName",
-        value
+        value,
       });
     }
 
@@ -130,9 +130,9 @@ export default {
       cancel,
       confirm,
       input,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
 

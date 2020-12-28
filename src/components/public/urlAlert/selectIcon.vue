@@ -5,7 +5,7 @@
       :style="{
         width: `${sideLen}px`,
         height: `${sideLen}px`,
-        margin: `${(boxHeight - sideLen) / 2}px 50px`
+        margin: `${(boxHeight - sideLen) / 2}px 50px`,
       }"
     >
       <span
@@ -83,20 +83,20 @@
 import { inject } from "vue";
 import { useStore } from "vuex";
 import request from "../../../network/request";
-import lpButton from "../../public/lp-button/lp-button";
+import lpButton from "../../public/lp-button";
 export default {
   components: {
-    lpButton
+    lpButton,
   },
   props: {
     boxHeight: {
       type: Number,
-      default: 170
+      default: 170,
     },
     sideLen: {
       type: Number,
-      default: 90
-    }
+      default: 90,
+    },
   },
   setup() {
     const store = useStore();
@@ -108,33 +108,33 @@ export default {
       if (state.url == "") {
         $message({
           type: "warning",
-          content: "请先输入URL"
+          content: "请先输入URL",
         });
         return;
       }
       store.commit("changeUrlInfo", {
         key: "isLoadingName",
-        value: true
+        value: true,
       });
 
       request({
         params: {
           target: "name",
-          targetUrl: state.url
-        }
+          targetUrl: state.url,
+        },
       })
-        .then(res => {
+        .then((res) => {
           store.commit("changeUrlInfo", { key: "name", value: res.data.data });
           $message({
             type: "success",
-            content: "网页名称获取成功"
+            content: "网页名称获取成功",
           });
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err);
           $message({
             type: "err",
-            content: "网络超时或目标网站拒绝此次请求"
+            content: "网络超时或目标网站拒绝此次请求",
           });
         })
         .finally(() => {
@@ -146,45 +146,45 @@ export default {
       if (state.url == "") {
         $message({
           type: "warning",
-          content: "请先输入URL"
+          content: "请先输入URL",
         });
         return;
       }
 
       store.commit("changeUrlInfo", {
         key: "isLoadingIcon",
-        value: true
+        value: true,
       });
 
       request({
         params: {
           target: "icon",
-          targetUrl: state.url
-        }
+          targetUrl: state.url,
+        },
       })
-        .then(res => {
+        .then((res) => {
           let icon = res.data.data;
           const otherIcon = res.data.otherIcon;
           if (icon == null) icon = otherIcon;
           store.commit("changeUrlInfo", [
             { key: "icon", value: icon },
-            { key: "otherIcon", value: otherIcon }
+            { key: "otherIcon", value: otherIcon },
           ]);
           $message({
             type: "success",
-            content: "图标获取成功"
+            content: "图标获取成功",
           });
         })
         .catch(() => {
           $message({
             type: "err",
-            content: "网络超时或目标网站拒绝此次请求"
+            content: "网络超时或目标网站拒绝此次请求",
           });
         })
         .finally(() => {
           store.commit("changeUrlInfo", [
             { key: "isLoadingIcon", value: false },
-            { key: "imgErr", value: false }
+            { key: "imgErr", value: false },
           ]);
         });
     }
@@ -195,7 +195,7 @@ export default {
       } else {
         store.commit("changeUrlInfo", [
           { key: "icon", value: state.otherIcon },
-          { key: "otherIcon", value: "" }
+          { key: "otherIcon", value: "" },
         ]);
       }
     }
@@ -204,9 +204,9 @@ export default {
       state,
       getUrlName,
       getUrlIcon,
-      imgloadErr
+      imgloadErr,
     };
-  }
+  },
 };
 </script>
 

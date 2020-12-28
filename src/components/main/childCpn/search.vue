@@ -4,7 +4,7 @@
       'search-container',
       'animate__animated',
       { animate__bounceInDown: moduleSearch.isSearch },
-      { animate__fadeOutUpBig: !moduleSearch.isSearch }
+      { animate__fadeOutUpBig: !moduleSearch.isSearch },
     ]"
   >
     <lp-input
@@ -22,10 +22,10 @@
 <script>
 import { useStore } from "vuex";
 import { reactive } from "vue";
-import lpInput from "../../public/lp-input/lp-input";
+import lpInput from "../../public/lp-input";
 export default {
   components: {
-    lpInput
+    lpInput,
   },
   setup() {
     const store = useStore();
@@ -41,7 +41,7 @@ export default {
     }
 
     return { store, moduleSearch, input, closeSearch };
-  }
+  },
 };
 </script>
 

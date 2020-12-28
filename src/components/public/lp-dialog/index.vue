@@ -28,21 +28,21 @@
 </template>
 
 <script>
-import lpButton from "../lp-button/lp-button";
+import lpButton from "../lp-button";
 import { ref } from "vue";
 export default {
   components: {
-    lpButton
+    lpButton,
   },
   props: {
     title: {
       type: String,
-      default: "提示"
+      default: "提示",
     },
     content: {
       type: String,
-      default: "确定关闭吗？"
-    }
+      default: "确定关闭吗？",
+    },
   },
   setup() {
     const status = ref(-1); // 存储用户点的状态，-1：未点击；0：取消；1：确定
@@ -63,7 +63,7 @@ export default {
     }
 
     return { removeElement, closeConfirm, sureConfirm, status, lpConfirmAlert };
-  }
+  },
 };
 </script>
 

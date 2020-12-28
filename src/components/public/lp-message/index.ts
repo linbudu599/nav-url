@@ -1,12 +1,16 @@
-import lpMessage from "./lp-message.vue";
+import lpMessage from "./index.vue";
 import { defineComponent, createVNode, render } from "vue";
 
 const MessageConstructor = defineComponent(lpMessage);
 let instance;
-const instances = [];
+const instances: any[] = [];
 
-export const createMessage = options => {
-  if (!Object.prototype.toString.call(options) === "[object Object]") {
+export interface CreateMessageOptions {
+  [key: string]: any;
+}
+
+export const createMessage = (options: CreateMessageOptions) => {
+  if (Object.prototype.toString.call(options) !== "[object Object]") {
     console.error("Please enter an object as a parameter");
   }
 
@@ -20,9 +24,9 @@ export const createMessage = options => {
 
   // document.querySelector('#app').appendChild(instance.el)
 
-  const close = props => {
+  const close = (props) => {
     instances.shift();
-    instances.forEach(v => {
+    instances.forEach((v: any) => {
       v.component.props.seed -= 1;
     });
     props.isDestory = true;
@@ -33,7 +37,7 @@ export const createMessage = options => {
   props.seed = instances.length;
 
   // 初始化参数
-  Object.keys(options).forEach(key => {
+  Object.keys(options).forEach((key) => {
     props[key] = options[key];
   });
 

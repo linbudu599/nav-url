@@ -1,8 +1,6 @@
 <template>
   <div class="icon-list-box">
-    <div class="remind-choose">
-      请选择一个你喜欢的图标
-    </div>
+    <div class="remind-choose">请选择一个你喜欢的图标</div>
     <div class="icon-list" @click="chooseIcon">
       <span
         :class="['icon-container', { active: state.currentIcon == item }]"
@@ -29,10 +27,10 @@
 
 <script>
 import { useStore } from "vuex";
-import lpButton from "../../public/lp-button/lp-button";
+import lpButton from "../../public/lp-button";
 export default {
   components: {
-    lpButton
+    lpButton,
   },
   setup(props) {
     // 存储所有icon的样式
@@ -1003,7 +1001,7 @@ window-restore`.split("\n");
       }
       store.commit("changeTabInfo", {
         key: "currentIcon",
-        value: target.id
+        value: target.id,
       });
     }
 
@@ -1011,7 +1009,7 @@ window-restore`.split("\n");
     function cancel() {
       store.commit("changeTabInfo", [
         { key: "currentIcon", value: "" },
-        { key: "isShowIconList", value: false }
+        { key: "isShowIconList", value: false },
       ]);
     }
 
@@ -1020,7 +1018,7 @@ window-restore`.split("\n");
       store.commit("changeTabInfo", [
         { key: "trueIcon", value: state.currentIcon },
         { key: "isShowIconList", value: false },
-        { key: "isSelected", value: true }
+        { key: "isSelected", value: true },
       ]);
     }
 
@@ -1029,9 +1027,9 @@ window-restore`.split("\n");
       cancel,
       confirm,
       chooseIcon,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
 

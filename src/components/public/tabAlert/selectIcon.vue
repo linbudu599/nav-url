@@ -7,7 +7,7 @@
         width: `${sideLen}px`,
         height: `${sideLen}px`,
         'margin-top': `${(boxHeight - sideLen) / 2}px`,
-        'margin-left': '90px'
+        'margin-left': '90px',
       }"
       @click="showIconList"
     >
@@ -24,20 +24,20 @@
 
 <script>
 import { useStore } from "vuex";
-import iconList from "../iconList/iconList";
+import iconList from "../iconList";
 export default {
   props: {
     boxHeight: {
       type: Number,
-      default: 120
+      default: 120,
     },
     sideLen: {
       type: Number,
-      default: 90
-    }
+      default: 90,
+    },
   },
   components: {
-    iconList
+    iconList,
   },
   setup() {
     const store = useStore();
@@ -47,21 +47,21 @@ export default {
     function showIconList() {
       store.commit("changeTabInfo", {
         key: "isShowIconList",
-        value: true
+        value: true,
       });
       if (state.isSelected) {
         store.commit("changeTabInfo", {
           key: "currentIcon",
-          value: state.trueIcon
+          value: state.trueIcon,
         });
       }
     }
 
     return {
       showIconList,
-      state
+      state,
     };
-  }
+  },
 };
 </script>
 

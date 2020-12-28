@@ -1,16 +1,4 @@
-// 防抖
-function debounce(fn, delay = 3000) {
-  let timer = null;
-
-  return function(...args) {
-    if (timer) clearTimeout(timer);
-
-    timer = setTimeout(() => {
-      fn.apply(this, args);
-      clearTimeout(timer);
-    }, delay);
-  };
-}
+import debounce from "lodash/debounce";
 
 // 将导航所有信息全部重新导入到vuex中
 function writeToVuex(store, obj) {
@@ -22,12 +10,12 @@ function writeToVuex(store, obj) {
 function updateLocalStorage(store) {
   window.localStorage.navInfos = JSON.stringify({
     navName: store.state.navName,
-    catalogue: store.state.catalogue
+    catalogue: store.state.catalogue,
   });
 }
 
 // 将Vuex中的信息更新到localStorage中（经过防抖处理）
-const updateLocal = debounce(updateLocalStorage);
+const updateLocal = debounce(updateLocalStorage, 3000);
 
 // 判断字符串长度是否符合大小规定
 function judgeString(s) {

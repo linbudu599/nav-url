@@ -29,7 +29,7 @@
           <i class="fas fa-angle-right tab-icon tab-angle-right" />
         </span>
       </li>
-      <li class="tab add-tab" @click="addTabShow">
+      <li class="tab add-tab" @click="displayAddTabModal">
         <i class="fas fa-plus" />
       </li>
     </ul>
@@ -38,61 +38,68 @@
     <!--    保存配置弹框     -->
     <save-config
       @closeSaveConfigAlert="closeSaveConfigAlert"
-      :isShow="isShowSaveAlert"
+      :isShow="shouldShowSaveAlert"
     />
     <!--    导入配置弹框     -->
     <import-config
       @closeImportConfigAlert="closeImportConfigAlert"
-      :isShow="isShowImportAlert"
+      :isShow="shouldShowImportAlert"
     />
   </aside>
 </template>
 
-<script>
+<script lang="ts">
 import { ref } from "vue";
+
 import { useStore } from "vuex";
-import tabAlert from "../public/tabAlert/tabAlert";
-import saveConfig from "./childCpn/saveConfig";
-import importConfig from "./childCpn/importConfig";
+
+import tabAlert from "../public/tabAlert/tabAlert.vue";
+
+import saveConfig from "./routers/saveConfig.vue";
+import importConfig from "./routers/importConfig.vue";
+
 export default {
   name: "tabs",
+
   components: {
     tabAlert,
     saveConfig,
-    importConfig
+    importConfig,
   },
+
   setup() {
     const store = useStore();
-    const navInfos = store.state; // Vuex的state对象
-    const isShowSaveAlert = ref(false); // 保存配置弹框是否展示
-    const isShowImportAlert = ref(false); // 导入配置弹框是否展示
+    const navInfos = store.state;
+
+    const shouldShowSaveAlert = ref(false); // 保存配置弹框是否展示
+    const shouldShowImportAlert = ref(false); // 导入配置弹框是否展示
 
     // 展示"添加标签弹框"
-    function addTabShow() {
+    const displayAddTabModal = (): void => {
       store.commit("changeTabInfo", [
         { key: "isShowAddTabAlert", value: true },
-        { key: "alertType", value: "新增标签" }
+        { key: "alertType", value: "新增标签" },
       ]);
-    }
+    };
 
     // 关闭"保存配置弹框"
     function closeSaveConfigAlert(value) {
-      isShowSaveAlert.value = value;
+      shouldShowSaveAlert.value = value;
     }
 
     // 展示"保存配置弹框"
     function showSaveConfigAlert() {
-      isShowSaveAlert.value = true;
+      shouldShowSaveAlert.value = true;
     }
 
     // 展示"导入配置弹框"
     function showImportConfigAlert() {
-      isShowImportAlert.value = true;
+      shouldShowImportAlert.value = true;
     }
 
     // 关闭"导入配置弹框"
     function closeImportConfigAlert(value) {
-      isShowImportAlert.value = value;
+      shouldShowImportAlert.value = value;
     }
 
     // 展示搜索框
@@ -109,8 +116,8 @@ export default {
     function toID(id) {
       const content = document.getElementById("content");
       const el = document.getElementById(`${id}`);
-      const start = content.scrollTop;
-      const end = el.offsetTop - 80;
+      const start = content!.scrollTop;
+      const end = el!.offsetTop - 80;
       const each =
         start > end
           ? (-1 * Math.abs(start - end)) / 20
@@ -118,7 +125,7 @@ export default {
       let count = 0;
       const timer = setInterval(() => {
         if (count < 20) {
-          content.scrollTop += each;
+          content!.scrollTop += each;
           count++;
         } else {
           clearInterval(timer);
@@ -128,27 +135,28 @@ export default {
 
     return {
       navInfos,
-      addTabShow,
-      isShowSaveAlert,
+      displayAddTabModal,
+      shouldShowSaveAlert,
       closeSaveConfigAlert,
       showSaveConfigAlert,
-      isShowImportAlert,
+      shouldShowImportAlert,
       showImportConfigAlert,
       closeImportConfigAlert,
       showSearch,
-      toID
+      toID,
     };
-  }
+  },
 };
 </script>
 
 <style scoped>
 #tabs-container {
-  width: 250px;
+  width: 210px;
   height: 100vh;
   float: left;
   background-color: rgb(44, 42, 42);
 }
+
 #logo-container {
   height: 79px;
   color: white;
@@ -156,12 +164,14 @@ export default {
   line-height: 80px;
   border-bottom: 1px solid rgb(68, 67, 67);
 }
+
 #tabs {
   height: calc(100% - 80px);
   overflow: auto;
   -ms-overflow-style: none;
   overflow: -moz-scrollbars-none;
 }
+
 #tabs::-webkit-scrollbar {
   display: none;
   width: 0 !important;
@@ -174,34 +184,42 @@ export default {
   line-height: 50px;
   position: relative;
 }
+
 .to-id {
   display: block;
   height: 100%;
   color: rgb(134, 125, 125);
 }
+
 .tab-search {
   margin-top: 20px;
   text-align: center;
 }
+
 .tab-import,
 .tab-save {
   text-align: center;
 }
+
 .tab:hover .to-id,
 .tab:hover {
   color: white;
 }
+
 .li-container {
   display: inline-block;
   width: 100%;
   padding-left: 90px;
 }
+
 .tab-icon {
   margin: 0 15px 0 -30px;
 }
+
 .add-tab {
   text-align: center;
 }
+
 .tab-angle-right {
   position: absolute;
   top: 50%;

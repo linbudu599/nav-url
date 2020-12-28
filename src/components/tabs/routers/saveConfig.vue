@@ -15,16 +15,16 @@
 
 <script>
 import { ref } from "vue";
-import lpButton from "../../public/lp-button/lp-button";
+import lpButton from "../../public/lp-button";
 export default {
   props: {
     isShow: {
       type: Boolean,
-      default: false
-    }
+      default: false,
+    },
   },
   components: {
-    lpButton
+    lpButton,
   },
   setup(props, { emit }) {
     const result = ref("none"); // 保存的结果
@@ -50,7 +50,7 @@ export default {
     }
 
     return { result, saveConfig, closeAlert };
-  }
+  },
 };
 </script>
 
