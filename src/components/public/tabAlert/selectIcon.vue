@@ -15,10 +15,10 @@
         :class="['select-icon-inner', { isSelected: state.isSelected }]"
         :style="{ 'line-height': `${sideLen}px` }"
       >
-        <i :class="['fas', `fa-${state.trueIcon}`]" />
+        <i :class="['fas', `fa-${state.selectedIcon}`]" />
       </span>
     </div>
-    <icon-List v-show="state.isShowIconList" />
+    <icon-List v-show="state.iconListVisible" />
   </div>
 </template>
 
@@ -46,13 +46,13 @@ export default {
     // 弹出icon列表框
     function showIconList() {
       store.commit("changeTabInfo", {
-        key: "isShowIconList",
+        key: "iconListVisible",
         value: true,
       });
       if (state.isSelected) {
         store.commit("changeTabInfo", {
           key: "currentIcon",
-          value: state.trueIcon,
+          value: state.selectedIcon,
         });
       }
     }

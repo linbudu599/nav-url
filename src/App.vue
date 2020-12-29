@@ -28,6 +28,7 @@ export default {
 
   setup() {
     const store = useStore();
+
     if (window.localStorage.getItem("IS_SET") === "true") {
       writeToVuex(store, JSON.parse(window.localStorage.navInfos));
     } else {

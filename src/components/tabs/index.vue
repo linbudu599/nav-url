@@ -30,7 +30,7 @@
           <i class="fas fa-angle-right tab-icon tab-angle-right" />
         </span>
       </li>
-      <li class="tab add-tab" @click="displayAddTabModal">
+      <li class="tab add-tab" @click="displayTabLabelCreateModal">
         <i class="fas fa-plus" />
       </li>
     </ul>
@@ -78,10 +78,9 @@ export default {
     const shouldShowSaveAlert = ref(false); // 保存配置弹框是否展示
     const shouldShowImportAlert = ref(false); // 导入配置弹框是否展示
 
-    // 展示"添加标签弹框"
-    const displayAddTabModal = (): void => {
+    const displayTabLabelCreateModal = (): void => {
       store.commit("changeTabInfo", [
-        { key: "isShowAddTabAlert", value: true },
+        { key: "labelModelVisible", value: true },
         { key: "alertType", value: "新增标签" },
       ]);
     };
@@ -137,7 +136,7 @@ export default {
 
     return {
       navInfos,
-      displayAddTabModal,
+      displayTabLabelCreateModal,
       shouldShowSaveAlert,
       toggleSaveModalStatus,
       toggleImportModalStatus,

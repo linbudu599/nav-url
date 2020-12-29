@@ -1,7 +1,8 @@
 import lpMessage from "./index.vue";
 import { defineComponent, createVNode, render } from "vue";
 
-const MessageConstructor = defineComponent(lpMessage);
+const MessageComponentConstructor = defineComponent(lpMessage);
+
 let instance;
 const instances: any[] = [];
 
@@ -11,12 +12,12 @@ export interface CreateMessageOptions {
 
 export const createMessage = (options: CreateMessageOptions) => {
   if (Object.prototype.toString.call(options) !== "[object Object]") {
-    console.error("Please enter an object as a parameter");
+    console.error("Please enter an object as parameter");
   }
 
   options = options ? options : {};
 
-  instance = createVNode(MessageConstructor, options);
+  instance = createVNode(MessageComponentConstructor, options);
 
   //挂载
   const container = document.createElement("div");

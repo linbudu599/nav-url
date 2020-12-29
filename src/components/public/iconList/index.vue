@@ -1009,15 +1009,15 @@ window-restore`.split("\n");
     function cancel() {
       store.commit("changeTabInfo", [
         { key: "currentIcon", value: "" },
-        { key: "isShowIconList", value: false },
+        { key: "iconListVisible", value: false },
       ]);
     }
 
     // 确认选择
     function confirm() {
       store.commit("changeTabInfo", [
-        { key: "trueIcon", value: state.currentIcon },
-        { key: "isShowIconList", value: false },
+        { key: "selectedIcon", value: state.currentIcon },
+        { key: "iconListVisible", value: false },
         { key: "isSelected", value: true },
       ]);
     }

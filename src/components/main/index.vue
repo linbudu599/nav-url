@@ -47,7 +47,7 @@
             class="each-url-box"
             v-show="
               !moduleSearch.isSearch ||
-                (moduleSearch.isSearch && judgeUrlIsShow(i, j))
+              (moduleSearch.isSearch && judgeUrlIsShow(i, j))
             "
             :draggable="tab.id == editWhich ? true : false"
             @dragenter="urlBoxEnter($event, tab.id)"
@@ -130,7 +130,7 @@ export default {
     urlAlert,
     tagAlert,
     carousel,
-    search
+    search,
   },
   setup() {
     const store = useStore();
@@ -146,7 +146,7 @@ export default {
       store.commit("changeUrlInfo", [
         { key: "isShow", value: true },
         { key: "whichTag", value: id },
-        { key: "alertType", value: "新增网址" }
+        { key: "alertType", value: "新增网址" },
       ]);
     }
 
@@ -175,25 +175,25 @@ export default {
     // 修改标签弹框弹出
     function editTagAlertShow(tab) {
       store.commit("changeTabInfo", [
-        { key: "isShowAddTabAlert", value: true },
+        { key: "labelModelVisible", value: true },
         { key: "tagName", value: tab.name },
-        { key: "trueIcon", value: tab.icon },
+        { key: "selectedIcon", value: tab.icon },
         { key: "isSelected", value: true },
         { key: "currentIcon", value: tab.icon },
         { key: "id", value: tab.id },
-        { key: "alertType", value: "修改标签" }
+        { key: "alertType", value: "修改标签" },
       ]);
     }
 
     // 删除标签以及标签下的所有网址
     function deleteTag(id) {
       $confirm({
-        content: "确定删除该标签以及该标签下所有网址吗？"
+        content: "确定删除该标签以及该标签下所有网址吗？",
       }).then(() => {
         store.commit("remove", id);
         $message({
           type: "success",
-          content: "标签页及子网址删除成功"
+          content: "标签页及子网址删除成功",
         });
       });
       // .catch(() => {});
@@ -202,12 +202,12 @@ export default {
     // 删除某个网址
     function deleteUrl(id) {
       $confirm({
-        content: "确定删除该网址吗？"
+        content: "确定删除该网址吗？",
       }).then(() => {
         store.commit("remove", id);
         $message({
           type: "success",
-          content: "网址删除成功"
+          content: "网址删除成功",
         });
       });
       // .catch(() => {});
@@ -221,7 +221,7 @@ export default {
         { key: "id", value: url.id },
         { key: "name", value: url.name },
         { key: "isShow", value: true },
-        { key: "alertType", value: "修改网址" }
+        { key: "alertType", value: "修改网址" },
       ]);
     }
 
@@ -311,9 +311,9 @@ export default {
       judgeUrlIsShow,
       urlBoxDragStart,
       urlBoxDragEnd,
-      urlBoxEnter
+      urlBoxEnter,
     };
-  }
+  },
 };
 </script>
 

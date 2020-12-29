@@ -3,9 +3,9 @@
     :class="[
       'tab-alert-container',
       'animate__animated',
-      { animate__fadeIn: state.isShowAddTabAlert },
+      { animate__fadeIn: state.labelModelVisible },
     ]"
-    v-show="state.isShowAddTabAlert"
+    v-show="state.labelModelVisible"
   >
     <div class="tab-alert">
       <div class="alert-title">
@@ -55,11 +55,11 @@ export default {
     function cancel() {
       store.commit("changeTabInfo", [
         { key: "tagName", value: "" },
-        { key: "trueIcon", value: "plus" },
+        { key: "selectedIcon", value: "plus" },
         { key: "currentIcon", value: "" },
         { key: "isSelected", value: false },
-        { key: "isShowIconList", value: false },
-        { key: "isShowAddTabAlert", value: false },
+        { key: "iconListVisible", value: false },
+        { key: "labelModelVisible", value: false },
       ]);
     }
 
@@ -94,7 +94,7 @@ export default {
           key: "1",
           value: {
             name: state.tagName,
-            icon: state.trueIcon,
+            icon: state.selectedIcon,
           },
         });
         $message({
@@ -106,7 +106,7 @@ export default {
           key: "catalogue",
           value: {
             id: state.id,
-            icon: state.trueIcon,
+            icon: state.selectedIcon,
             name: state.tagName,
           },
         });

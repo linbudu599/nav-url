@@ -1,14 +1,17 @@
-import Vuex from "../../node_modules/vuex/dist/vuex.cjs";
-import { updateLocal } from "../utils/utils";
-import moduleTab from "./module/tab";
-import moduleUrl from "./module/url";
-import moduleSearch from "./module/search";
+import { createStore } from "vuex";
 
-const store = Vuex.createStore({
+import TabModule from "./module/tab";
+import URLModule from "./module/url";
+import SearchModule from "./module/search";
+
+import { updateLocal } from "../utils/utils";
+
+const store = createStore({
   state: {
     navName: "",
-    catalogue: null
+    catalogue: null,
   },
+
   mutations: {
     // 更新
     update(state, payload) {
@@ -90,7 +93,7 @@ const store = Vuex.createStore({
           id: _id,
           name: value.name,
           icon: value.icon,
-          URLS: []
+          URLS: [],
         });
         updateLocal(store);
       }
@@ -115,7 +118,7 @@ const store = Vuex.createStore({
               id: trueId,
               url: value.url,
               icon: value.icon,
-              name: value.name
+              name: value.name,
             });
             updateLocal(store);
             break;
@@ -132,20 +135,21 @@ const store = Vuex.createStore({
         if (catalogue[i].id != tabId) continue;
         const URLS = catalogue[i].URLS;
         const newURLS = new Array(URLS.length);
-        URLS.forEach(v => {
+        URLS.forEach((v) => {
           newURLS[result.indexOf(v.id)] = v;
         });
         catalogue[i].URLS = newURLS;
         break;
       }
       updateLocal(store);
-    }
+    },
   },
+
   modules: {
-    moduleTab,
-    moduleUrl,
-    moduleSearch
-  }
+    TabModule,
+    URLModule,
+    SearchModule,
+  },
 });
 
 export default store;

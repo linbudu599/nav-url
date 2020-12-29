@@ -1,20 +1,22 @@
 import lpDialog from "./index.vue";
 import { defineComponent, createVNode, render, toRef, watch } from "vue";
 
-const confirmConstructor = defineComponent(lpDialog);
+const ConfirmComponentConstructor = defineComponent(lpDialog);
 
 export interface CreateDialogOptions {
   [key: string]: any;
 }
 
 export const createDialog = (options: CreateDialogOptions) => {
+  console.log(options);
+
   if (Object.prototype.toString.call(options) !== "[object Object]") {
-    console.error("Please enter an object as a parameter");
+    console.error("Please enter an object as parameter");
   }
 
   options = options ? options : {};
 
-  const instance = createVNode(confirmConstructor, options);
+  const instance = createVNode(ConfirmComponentConstructor, options);
 
   const container = document.createElement("div");
   render(instance, container);
