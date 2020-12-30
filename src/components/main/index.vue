@@ -117,14 +117,21 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { ref, inject } from "vue";
+
 import { useStore } from "vuex";
-import urlAlert from "../public/urlAlert/urlAlert";
-import tagAlert from "../public/tabAlert/tabAlert";
-import carousel from "./childCpn/carousel";
-import search from "./childCpn/search";
+
+import urlAlert from "../public/urlAlert/urlAlert.vue";
+import tagAlert from "../public/tabAlert/tabAlert.vue";
+
+import carousel from "./childCpn/carousel.vue";
+import search from "./childCpn/search.vue";
+
 import { exchangeElements } from "../../utils/utils";
+
+import { IChangeTabInfoPayload } from "../../store/module/tab";
+
 export default {
   components: {
     urlAlert,
@@ -134,21 +141,22 @@ export default {
   },
   setup() {
     const store = useStore();
-    const catalogue = store.state.catalogue;
-    const moduleUrl = store.state.moduleUrl;
-    const moduleSearch = store.state.moduleSearch;
-    const $message = inject("message");
-    const $confirm = inject("confirm");
+
+    const { catalogue, moduleUrl, moduleSearch } = store.state;
+
+    const $message: any = inject("message");
+    const $confirm: any = inject("confirm");
+
     const editWhich = ref(-1);
 
     // 弹出添加URL的框
-    function addMoreUrl(id) {
+    const addMoreUrl = (id: number): void => {
       store.commit("changeUrlInfo", [
         { key: "isShow", value: true },
         { key: "whichTag", value: id },
         { key: "alertType", value: "新增网址" },
-      ]);
-    }
+      ] as IChangeTabInfoPayload[]);
+    };
 
     // 处理无icon或icon加载失败的图片，令其使用默认svg图标
     function imgLoadErr(e) {
@@ -273,8 +281,8 @@ export default {
       el.style.opacity = 1;
       // 获取当前正在编辑标签中所有url的排序
       const timer = setTimeout(() => {
-        const result = [];
-        const children = elementNodeLocated.parentNode.children;
+        const result: any[] = [];
+        const children = (elementNodeLocated as any).parentNode!.children;
         const length = children.length;
         for (let i = 0; i < length - 1; i++) {
           result.push(children[i].getAttribute("data-id"));

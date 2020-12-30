@@ -146,9 +146,10 @@ const store = createStore({
   },
 
   modules: {
-    TabModule,
-    URLModule,
-    SearchModule,
+    // FIXME:
+    moduleTab: TabModule,
+    moduleUrl: URLModule,
+    moduleSearch: SearchModule,
   },
 });
 

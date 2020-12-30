@@ -50,7 +50,6 @@ export default {
     const store = useStore();
     const state = store.state.moduleTab;
     const $message = inject("message");
-
     // 关闭弹框
     function cancel() {
       store.commit("changeTabInfo", [

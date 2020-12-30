@@ -32,4 +32,6 @@ const moduleTab = {
   },
 };
 
+export * from "./typing";
+
 export default moduleTab;

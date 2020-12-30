@@ -1,3 +1,5 @@
+import { IURLState, IChangeURLInfoPayload } from "./typing";
+
 // 存储用户的添加URL情况
 const moduleUrl = {
   state: {
@@ -11,27 +13,25 @@ const moduleUrl = {
     imgErr: false, // 图片是否显示异常
     whichTag: -1, // 添加到哪个标签中去
     id: -1, // 记录id
-    alertType: "新增网址"
-  },
+    alertType: "新增网址",
+  } as IURLState,
   mutations: {
     // 修改增加URL弹框内的信息
-    changeUrlInfo(state, payload) {
-      let key, value, current;
+    changeUrlInfo(
+      state: IURLState,
+      payload: IChangeURLInfoPayload | IChangeURLInfoPayload[]
+    ) {
       if (Array.isArray(payload)) {
-        const length = payload.length;
-        for (let i = 0; i < length; i++) {
-          current = payload[i];
-          key = current.key;
-          value = current.value;
-          state[key] = value;
+        for (const item of payload) {
+          (state[item.key] as IChangeURLInfoPayload["value"]) = item.value;
         }
       } else {
-        key = payload.key;
-        value = payload.value;
-        state[key] = value;
+        (state[payload.key] as IChangeURLInfoPayload["value"]) = payload.value;
       }
-    }
-  }
+    },
+  },
 };
+
+export * from "./typing";
 
 export default moduleUrl;
